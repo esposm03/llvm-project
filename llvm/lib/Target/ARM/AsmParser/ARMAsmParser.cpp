@@ -6463,6 +6463,7 @@ bool ARMAsmParser::parsePrefix(ARMMCExpr::VariantKind &RefKind) {
     ELF = (1 << MCContext::IsELF),
     MACHO = (1 << MCContext::IsMachO),
     WASM = (1 << MCContext::IsWasm),
+    VSBF = (1 << MCContext::IsVsbf)
   };
   static const struct PrefixEntry {
     const char *Spelling;
@@ -6498,6 +6499,9 @@ bool ARMAsmParser::parsePrefix(ARMMCExpr::VariantKind &RefKind) {
     break;
   case MCContext::IsCOFF:
     CurrentFormat = COFF;
+    break;
+  case MCContext::IsVsbf:
+    CurrentFormat = VSBF;
     break;
   case MCContext::IsWasm:
     CurrentFormat = WASM;

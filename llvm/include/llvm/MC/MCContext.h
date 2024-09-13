@@ -57,6 +57,7 @@ class MCSectionELF;
 class MCSectionGOFF;
 class MCSectionMachO;
 class MCSectionSPIRV;
+class MCSectionVsbf;
 class MCSectionWasm;
 class MCSectionXCOFF;
 class MCStreamer;
@@ -92,6 +93,7 @@ public:
     IsGOFF,
     IsCOFF,
     IsSPIRV,
+    IsVsbf,
     IsWasm,
     IsXCOFF,
     IsDXContainer
@@ -145,6 +147,7 @@ private:
   SpecificBumpPtrAllocator<MCSectionMachO> MachOAllocator;
   SpecificBumpPtrAllocator<MCSectionGOFF> GOFFAllocator;
   SpecificBumpPtrAllocator<MCSectionSPIRV> SPIRVAllocator;
+  SpecificBumpPtrAllocator<MCSectionVsbf> VsbfAllocator;
   SpecificBumpPtrAllocator<MCSectionWasm> WasmAllocator;
   SpecificBumpPtrAllocator<MCSectionXCOFF> XCOFFAllocator;
   SpecificBumpPtrAllocator<MCInst> MCInstAllocator;

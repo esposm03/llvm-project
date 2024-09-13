@@ -29,6 +29,7 @@
 #include "llvm/MC/MCSectionGOFF.h"
 #include "llvm/MC/MCSectionMachO.h"
 #include "llvm/MC/MCSectionSPIRV.h"
+#include "llvm/MC/MCSectionVsbf.h"
 #include "llvm/MC/MCSectionWasm.h"
 #include "llvm/MC/MCSectionXCOFF.h"
 #include "llvm/MC/MCStreamer.h"
@@ -94,6 +95,9 @@ MCContext::MCContext(const Triple &TheTriple, const MCAsmInfo *mai,
     break;
   case Triple::ELF:
     Env = IsELF;
+    break;
+  case Triple::Vsbf:
+    Env = IsVsbf;
     break;
   case Triple::Wasm:
     Env = IsWasm;
@@ -275,6 +279,8 @@ MCSymbol *MCContext::createSymbolImpl(const MCSymbolTableEntry *Name,
     return new (Name, *this) MCSymbolGOFF(Name, IsTemporary);
   case MCContext::IsMachO:
     return new (Name, *this) MCSymbolMachO(Name, IsTemporary);
+  case MCContext::IsVsbf:
+    return new (Name, *this) MCSymbolWasm(Name, IsTemporary); // TODO(vsbf): implement symbols
   case MCContext::IsWasm:
     return new (Name, *this) MCSymbolWasm(Name, IsTemporary);
   case MCContext::IsXCOFF:

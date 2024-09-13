@@ -12,6 +12,7 @@ add_llvm_component_library(LLVMX86Desc
   X86MachObjectWriter.cpp
   X86MnemonicTables.cpp
   X86ELFObjectWriter.cpp
+  X86VsbfObjectTargetWriter.cpp
   X86WinCOFFObjectWriter.cpp
   X86WinCOFFStreamer.cpp
   X86WinCOFFTargetStreamer.cpp

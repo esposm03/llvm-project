@@ -794,6 +794,11 @@ void MCObjectFileInfo::initSPIRVMCObjectFileInfo(const Triple &T) {
   TextSection = Ctx->getSPIRVSection();
 }
 
+void MCObjectFileInfo::initVsbfMCObjectFileInfo(const Triple &T) {
+  // Put everything in a single binary section.
+  TextSection = Ctx->getSPIRVSection();
+}
+
 void MCObjectFileInfo::initWasmMCObjectFileInfo(const Triple &T) {
   TextSection = Ctx->getWasmSection(".text", SectionKind::getText());
   DataSection = Ctx->getWasmSection(".data", SectionKind::getData());
@@ -1041,6 +1046,10 @@ void MCObjectFileInfo::initMCObjectFileInfo(MCContext &MCCtx, bool PIC,
   case MCContext::IsSPIRV:
     initSPIRVMCObjectFileInfo(TheTriple);
     break;
+  case MCContext::IsVsbf:
+    // TODO(vsbf): should probably do initialization here
+    initVsbfMCObjectFileInfo(TheTriple);
+    break;
   case MCContext::IsWasm:
     initWasmMCObjectFileInfo(TheTriple);
     break;
@@ -1069,6 +1078,7 @@ MCSection *MCObjectFileInfo::getDwarfComdatSection(const char *Name,
   case Triple::XCOFF:
   case Triple::DXContainer:
   case Triple::UnknownObjectFormat:
+  case Triple::Vsbf:
     report_fatal_error("Cannot get DWARF comdat section for this object file "
                        "format: not implemented.");
     break;

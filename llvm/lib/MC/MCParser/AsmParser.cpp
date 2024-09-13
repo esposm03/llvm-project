@@ -49,6 +49,7 @@
 #include "llvm/MC/MCValue.h"
 #include "llvm/Support/Casting.h"
 #include "llvm/Support/CommandLine.h"
+#include "llvm/Support/Debug.h"
 #include "llvm/Support/ErrorHandling.h"
 #include "llvm/Support/MD5.h"
 #include "llvm/Support/MathExtras.h"
@@ -802,6 +803,10 @@ AsmParser::AsmParser(SourceMgr &SM, MCContext &Ctx, MCStreamer &Out,
   case MCContext::IsSPIRV:
     report_fatal_error(
         "Need to implement createSPIRVAsmParser for SPIRV format.");
+    break;
+  case MCContext::IsVsbf:
+    // TODO(vsbf): should probably do something here
+    PlatformParser.reset(createELFAsmParser());
     break;
   case MCContext::IsWasm:
     PlatformParser.reset(createWasmAsmParser());
@@ -6460,6 +6465,7 @@ bool parseAssignmentExpression(StringRef Name, bool allow_redef,
 MCAsmParser *llvm::createMCAsmParser(SourceMgr &SM, MCContext &C,
                                      MCStreamer &Out, const MCAsmInfo &MAI,
                                      unsigned CB) {
+  dbgs() << "SES\n";
   if (C.getTargetTriple().isSystemZ() && C.getTargetTriple().isOSzOS())
     return new HLASMAsmParser(SM, C, Out, MAI, CB);
 

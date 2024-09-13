@@ -29,6 +29,7 @@
 #include "llvm/MC/TargetRegistry.h"
 #include "llvm/Support/CommandLine.h"
 #include "llvm/Support/Compression.h"
+#include "llvm/Support/Debug.h"
 #include "llvm/Support/FileUtilities.h"
 #include "llvm/Support/FormattedStream.h"
 #include "llvm/Support/InitLLVM.h"
@@ -229,9 +230,12 @@ static cl::opt<ActionType> Action(
 
 static const Target *GetTarget(const char *ProgName) {
   // Figure out the target triple.
+  dbgs() << TripleName << "\n";
   if (TripleName.empty())
     TripleName = sys::getDefaultTargetTriple();
   Triple TheTriple(Triple::normalize(TripleName));
+  dbgs() << TheTriple.getObjectFormat() << "\n";
+  dbgs() << Triple::Vsbf << "\n";
 
   // Get the target specific parser.
   std::string Error;

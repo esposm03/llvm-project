@@ -361,6 +361,7 @@ StringRef Triple::getObjectFormatTypeName(ObjectFormatType Kind) {
   case ELF: return "elf";
   case GOFF: return "goff";
   case MachO: return "macho";
+  case Vsbf: return "vsbf";
   case Wasm: return "wasm";
   case XCOFF: return "xcoff";
   case DXContainer: return "dxcontainer";
@@ -734,6 +735,7 @@ static Triple::ObjectFormatType parseFormat(StringRef EnvironmentName) {
       .EndsWith("elf", Triple::ELF)
       .EndsWith("goff", Triple::GOFF)
       .EndsWith("macho", Triple::MachO)
+      .EndsWith("vsbf", Triple::Vsbf)
       .EndsWith("wasm", Triple::Wasm)
       .EndsWith("spirv", Triple::SPIRV)
       .Default(Triple::UnknownObjectFormat);

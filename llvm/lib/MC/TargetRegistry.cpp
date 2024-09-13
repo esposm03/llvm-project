@@ -14,6 +14,8 @@
 #include "llvm/MC/MCContext.h"
 #include "llvm/MC/MCObjectStreamer.h"
 #include "llvm/MC/MCObjectWriter.h"
+#include "llvm/MC/MCVsbfStreamer.h"
+#include "llvm/Support/Debug.h"
 #include "llvm/Support/raw_ostream.h"
 #include <cassert>
 #include <vector>
@@ -43,6 +45,11 @@ MCStreamer *Target::createMCObjectStreamer(
     else
       S = createMachOStreamer(Ctx, std::move(TAB), std::move(OW),
                               std::move(Emitter), false);
+    break;
+  case Triple::Vsbf:
+    dbgs() << "Creating MCVsbfStreamer\n";
+    S = createVsbfStreamer(Ctx, std::move(TAB), std::move(OW), std::move(Emitter));
+    dbgs() << "Created MCVsbfStreamer\n";
     break;
   case Triple::ELF:
     if (ELFStreamerCtorFn)

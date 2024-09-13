@@ -57,6 +57,7 @@ add_llvm_component_library(LLVMMC
   MCTargetOptions.cpp
   MCTargetOptionsCommandFlags.cpp
   MCValue.cpp
+  MCVsbfStreamer.cpp
   MCWasmObjectTargetWriter.cpp
   MCWasmStreamer.cpp
   MCWin64EH.cpp
@@ -68,6 +69,7 @@ add_llvm_component_library(LLVMMC
   SPIRVObjectWriter.cpp
   StringTableBuilder.cpp
   TargetRegistry.cpp
+  VsbfObjectWriter.cpp
   WasmObjectWriter.cpp
   WinCOFFObjectWriter.cpp
   XCOFFObjectWriter.cpp

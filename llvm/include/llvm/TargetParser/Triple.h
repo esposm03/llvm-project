@@ -303,6 +303,7 @@ public:
     GOFF,
     MachO,
     SPIRV,
+    Vsbf,
     Wasm,
     XCOFF,
   };

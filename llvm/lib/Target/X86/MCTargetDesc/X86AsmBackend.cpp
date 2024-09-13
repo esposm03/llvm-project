@@ -9,6 +9,7 @@
 #include "MCTargetDesc/X86BaseInfo.h"
 #include "MCTargetDesc/X86EncodingOptimization.h"
 #include "MCTargetDesc/X86FixupKinds.h"
+#include "X86VsbfObjectTargetWriter.h"
 #include "llvm/ADT/StringSwitch.h"
 #include "llvm/BinaryFormat/ELF.h"
 #include "llvm/BinaryFormat/MachO.h"
@@ -34,6 +35,7 @@
 #include "llvm/Support/CommandLine.h"
 #include "llvm/Support/ErrorHandling.h"
 #include "llvm/Support/raw_ostream.h"
+#include <cstdint>
 
 using namespace llvm;
 
@@ -1107,6 +1109,14 @@ public:
   }
 };
 
+class VsbfX86_64AsmBackend : public X86AsmBackend {
+public:
+  VsbfX86_64AsmBackend(const Target &T, const MCSubtargetInfo &STI) : X86AsmBackend(T, STI) {}
+  std::unique_ptr<MCObjectTargetWriter> createObjectTargetWriter() const override {
+    return createX86VsbfObjectWriter();
+  }
+};
+
 class WindowsX86AsmBackend : public X86AsmBackend {
   bool Is64Bit;
 
@@ -1521,6 +1531,10 @@ MCAsmBackend *llvm::createX86_64AsmBackend(const Target &T,
     assert(TheTriple.isOSBinFormatCOFF() &&
          "Only COFF format is supported in UEFI environment.");
     return new WindowsX86AsmBackend(T, true, STI);
+  }
+
+  if (TheTriple.getObjectFormat() == Triple::Vsbf) {
+    return new VsbfX86_64AsmBackend(T, STI);
   }
 
   uint8_t OSABI = MCELFObjectTargetWriter::getOSABI(TheTriple.getOS());
