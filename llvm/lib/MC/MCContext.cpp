@@ -39,6 +39,7 @@
 #include "llvm/MC/MCSymbolELF.h"
 #include "llvm/MC/MCSymbolGOFF.h"
 #include "llvm/MC/MCSymbolMachO.h"
+#include "llvm/MC/MCSymbolVsbf.h"
 #include "llvm/MC/MCSymbolWasm.h"
 #include "llvm/MC/MCSymbolXCOFF.h"
 #include "llvm/MC/MCTargetOptions.h"
@@ -265,6 +266,8 @@ MCSymbol *MCContext::createSymbolImpl(const MCSymbolTableEntry *Name,
                 "MCSymbol classes must be trivially destructible");
   static_assert(std::is_trivially_destructible<MCSymbolMachO>(),
                 "MCSymbol classes must be trivially destructible");
+  static_assert(std::is_trivially_destructible<MCSymbolVsbf>(),
+                "MCSymbol classes must be trivially destructible");
   static_assert(std::is_trivially_destructible<MCSymbolWasm>(),
                 "MCSymbol classes must be trivially destructible");
   static_assert(std::is_trivially_destructible<MCSymbolXCOFF>(),
@@ -280,7 +283,7 @@ MCSymbol *MCContext::createSymbolImpl(const MCSymbolTableEntry *Name,
   case MCContext::IsMachO:
     return new (Name, *this) MCSymbolMachO(Name, IsTemporary);
   case MCContext::IsVsbf:
-    return new (Name, *this) MCSymbolWasm(Name, IsTemporary); // TODO(vsbf): implement symbols
+    return new (Name, *this) MCSymbolVsbf(Name, IsTemporary);
   case MCContext::IsWasm:
     return new (Name, *this) MCSymbolWasm(Name, IsTemporary);
   case MCContext::IsXCOFF:
