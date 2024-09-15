@@ -6465,7 +6465,6 @@ bool parseAssignmentExpression(StringRef Name, bool allow_redef,
 MCAsmParser *llvm::createMCAsmParser(SourceMgr &SM, MCContext &C,
                                      MCStreamer &Out, const MCAsmInfo &MAI,
                                      unsigned CB) {
-  dbgs() << "SES\n";
   if (C.getTargetTriple().isSystemZ() && C.getTargetTriple().isOSzOS())
     return new HLASMAsmParser(SM, C, Out, MAI, CB);
 

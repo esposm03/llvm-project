@@ -47,9 +47,7 @@ MCStreamer *Target::createMCObjectStreamer(
                               std::move(Emitter), false);
     break;
   case Triple::Vsbf:
-    dbgs() << "Creating MCVsbfStreamer\n";
     S = createVsbfStreamer(Ctx, std::move(TAB), std::move(OW), std::move(Emitter));
-    dbgs() << "Created MCVsbfStreamer\n";
     break;
   case Triple::ELF:
     if (ELFStreamerCtorFn)
