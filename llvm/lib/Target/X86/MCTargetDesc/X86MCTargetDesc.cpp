@@ -19,6 +19,7 @@
 #include "X86TargetStreamer.h"
 #include "llvm/ADT/APInt.h"
 #include "llvm/DebugInfo/CodeView/CodeView.h"
+#include "llvm/MC/MCAsmInfoVsbf.h"
 #include "llvm/MC/MCDwarf.h"
 #include "llvm/MC/MCInstrAnalysis.h"
 #include "llvm/MC/MCInstrInfo.h"
@@ -455,6 +456,8 @@ static MCAsmInfo *createX86MCAsmInfo(const MCRegisterInfo &MRI,
     MAI = new X86MCAsmInfoGNUCOFF(TheTriple);
   } else if (TheTriple.isUEFI()) {
     MAI = new X86MCAsmInfoGNUCOFF(TheTriple);
+  } else if (TheTriple.isOSBinFormatVsbf()) {
+    MAI = new MCAsmInfoVsbf(TheTriple);
   } else {
     // The default is ELF.
     MAI = new X86ELFMCAsmInfo(TheTriple);

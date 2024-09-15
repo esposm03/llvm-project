@@ -9,6 +9,7 @@ add_llvm_component_library(LLVMMC
   MCAsmInfoDarwin.cpp
   MCAsmInfoELF.cpp
   MCAsmInfoGOFF.cpp
+  MCAsmInfoVsbf.cpp
   MCAsmInfoWasm.cpp
   MCAsmInfoXCOFF.cpp
   MCAsmMacro.cpp

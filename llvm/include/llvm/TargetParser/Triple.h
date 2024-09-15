@@ -734,6 +734,11 @@ public:
     return getObjectFormat() == Triple::MachO;
   }
 
+  /// Tests whether the OS uses the Vsbf binary format.
+  bool isOSBinFormatVsbf() const {
+    return getObjectFormat() == Triple::Vsbf;
+  }
+
   /// Tests whether the OS uses the Wasm binary format.
   bool isOSBinFormatWasm() const {
     return getObjectFormat() == Triple::Wasm;
