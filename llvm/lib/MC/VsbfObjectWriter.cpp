@@ -26,9 +26,7 @@ uint64_t VsbfObjectWriter::writeObject(MCAssembler &Asm) {
     // ... then the segment headers (but this is a .o file, so there aren't any)
     // and the section headers ...
     for (auto &sec : Asm) {
-      sec.dump();
       auto size = Asm.getSectionFileSize(sec);
-      dbgs() << "\n" << dataStart << " " << size << "\n";
 
       W.write<uint8_t>(0); // typ
       W.write<uint8_t>(7); // flags
