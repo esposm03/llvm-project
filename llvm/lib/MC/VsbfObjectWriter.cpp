@@ -13,7 +13,7 @@ uint64_t VsbfObjectWriter::writeObject(MCAssembler &Asm) {
 
     auto numSegments = 0;
     auto numSections = Asm.end() - Asm.begin();
-    auto dataStart = 20 + (numSegments * 24) + (numSections * 12);
+    auto dataStart = 20 + (numSegments * 24) + (numSections * 16);
 
     // Write the VSBF header...
     W.OS << 'V' << 'S' << 'B' << 'F';
@@ -32,9 +32,9 @@ uint64_t VsbfObjectWriter::writeObject(MCAssembler &Asm) {
 
       W.write<uint8_t>(0); // typ
       W.write<uint8_t>(7); // flags
-      W.write<uint16_t>(0); // align
+      W.write<uint16_t>(size); // size
       W.write<uint32_t>(dataStart); // offset
-      W.write<uint32_t>(size); // size
+      W.write<uint64_t>(0); // address
 
       dataStart += size;
     }
